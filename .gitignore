@@ -1,0 +1,67 @@
+
+# ============================
+# Python
+# ============================
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ============================
+# Virtual Environments
+# ============================
+venv/
+.venv/
+env/
+myenv/
+
+# ============================
+# Environment Variables
+# ============================
+.env
+.env.*
+!.env.example
+
+# ============================
+# Jupyter Notebooks
+# ============================
+.ipynb_checkpoints/
+
+# ============================
+# PyKEEN / ML Models
+# ============================
+checkpoints/
+models/
+saved_models/
+*.pt
+*.pth
+*.ckpt
+*.pkl
+
+# ============================
+# Datasets / Cached Data
+# ============================
+data/
+datasets/
+cache/
+.pykeen/
+
+# ============================
+# Generated Results
+# ============================
+outputs/
+runs/
+logs/
+tensorboard/
+wandb/
+
+# ============================
+# IDE / OS Files
+# ============================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
