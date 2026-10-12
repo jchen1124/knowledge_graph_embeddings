@@ -1,0 +1,12 @@
+# Knowledge Graph Embeddings (Q1 & Q3)
+pykeen==1.11.1
+torch>=2.5,<3
+
+# Data Processing & Visualization (Q1)
+numpy>=1.26,<3
+pandas>=2.2,<3
+scikit-learn>=1.5,<2
+matplotlib>=3.8,<4
+
+# Knowledge Graph Construction (Q3)
+rdflib>=7.0,<8
