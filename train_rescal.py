@@ -17,6 +17,13 @@ result = pipeline(
     dataset=dataset,
     model="RESCAL",
 
+    regularizer="lp",
+    regularizer_kwargs={
+        "weight": 0.001,
+        "p": 2.0,
+        "normalize": True,
+    },
+
     # Model settings
     model_kwargs={
         "embedding_dim": 100,
@@ -59,7 +66,8 @@ result = pipeline(
 
 
 # 3. Save the trained model and results
-result.save_to_directory("outputs/rescal_50epochs")
+# result.save_to_directory("outputs/rescal_50epochs")
+result.save_to_directory("outputs/rescal_reg001_10epochs")
 
 
 # 4. Print validation MRR
@@ -69,3 +77,5 @@ mrr = result.metric_results.get_metric(
 
 print(f"Validation Filtered MRR: {mrr:.4f}")
 print("RESCAL training complete!")
+
+# Validation Filtered MRR: 0.0004
