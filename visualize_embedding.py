@@ -3,7 +3,6 @@ from collections import defaultdict
 from pathlib import Path
 import csv
 import random
-
 import matplotlib.pyplot as plt
 import torch
 from pykeen.datasets import FB15k237
