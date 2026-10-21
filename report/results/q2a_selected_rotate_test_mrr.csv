@@ -1,0 +1,2 @@
+model,filtered_mrr,tail_mrr
+"RotatE (AdamW, lr=0.0005, wd=0.01)",0.2615070641040802,0.35364219546318054
