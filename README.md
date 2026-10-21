@@ -1,6 +1,6 @@
 # CMSC 491 — Assignment 2: Knowledge Graph Embeddings and Question Answering
 
-This repository contains the Python code for **Question 1 (Knowledge Graph Embeddings)** and **Question 3 (Knowledge Graph Question Answering)**. The scripts in the **project root** belong to Question 1, while the scripts inside **`Question_3/`** belong to Question 3.
+This repository contains the Python code for **Question 1 (Knowledge Graph Embeddings)**, **Question 2A (KGE Improvement Experiments)**, and **Question 3 (Knowledge Graph Question Answering)**. The scripts for Questions 1 and 2A are in the **project root**, while the scripts for Question 3 are inside **`Question_3/`**. The written report contains the explanations and analysis.
 
 ## File guide
 
@@ -16,6 +16,17 @@ This repository contains the Python code for **Question 1 (Knowledge Graph Embed
 | `analyze_rankings.py` | **1(e)** | Examines selected test triples, produces top-five candidate predictions, and records true-answer ranks for each model. |
 
 **Question 1(d)** uses the evaluation and ranking outputs to compare the models; the discussion is in the written report.
+
+### Question 2A — Improving KGE Performance (FB15k-237)
+
+| File | Assignment part | Purpose |
+|---|---|---|
+| `train_rotate_2a.py` | **2A(a)(i)** | Compares RotatE embedding dimensions of 50 and 200 against the existing 100-dimensional baseline, saving separate checkpoints and validation results. |
+| `train_rotate_2a_negative.py` | **2A(a)(ii)** | Trains RotatE with Bernoulli negative sampling for comparison against the basic negative-sampling baseline. |
+| `train_rotate_2a_optimization.py` | **2A(a)(iii)** | Tests Adam and AdamW optimizer configurations at different learning rates while keeping the remaining training settings fixed. |
+| `evaluate_rotate_2a.py` | **2A(b)** | Loads the selected RotatE checkpoint and evaluates filtered MRR on the held-out FB15k-237 test set without retraining. |
+
+**Question 2A(b)** summarizes the validation comparisons and final test result, while **Question 2A(c)** explains the observed changes in the written report.
 
 ### Question 3 — Knowledge Graph Question Answering (SimpleQuestionsWikidata)
 
@@ -39,6 +50,10 @@ This repository contains the Python code for **Question 1 (Knowledge Graph Embed
 ├── visualize_embedding.py
 ├── evaluate_models.py
 ├── analyze_rankings.py
+├── train_rotate_2a.py
+├── train_rotate_2a_negative.py
+├── train_rotate_2a_optimization.py
+├── evaluate_rotate_2a.py
 ├── Question_3/
 │   ├── inspect_dataset.py
 │   ├── construct_graph.py
@@ -47,10 +62,10 @@ This repository contains the Python code for **Question 1 (Knowledge Graph Embed
 │   ├── evaluate_kgqa.py
 │   ├── data/                         # SimpleQuestionsWikidata data splits
 │   └── outputs/                      # RDF graph and KGQA TransE checkpoint
-├── outputs/                          # Question 1 checkpoints and metadata
+├── outputs/                          # Question 1 and 2A checkpoints and metadata
 ├── report/
 │   ├── figures/                      # Question 1 PCA plots
-│   └── results/                      # Evaluation tables and KGQA predictions
+│   └── results/                      # Question 1, 2A, and 3 evaluation outputs
 ├── requirements.txt
 └── README.md
 ```
@@ -88,6 +103,29 @@ python analyze_rankings.py
 ```
 
 Question 1 outputs include model checkpoints under `outputs/`, plots under `report/figures/`, and result files such as `report/results/q1c_test_mrr.csv` and `report/results/q1e_rankings.csv`.
+
+### Question 2A
+
+The original 100-dimensional RotatE model (`train_rotate.py`) serves as the baseline. Each experiment saves its checkpoint separately and evaluates configurations using the validation set.
+
+```bash
+# 2A(a)(i): Compare embedding dimensions
+python train_rotate_2a.py --embedding-dim 50
+python train_rotate_2a.py --embedding-dim 200
+
+# 2A(a)(ii): Compare Bernoulli against the existing basic-sampling baseline
+python train_rotate_2a_negative.py
+
+# 2A(a)(iii): Compare learning rates and optimizer configurations
+python train_rotate_2a_optimization.py --optimizer adam --lr 0.0005
+python train_rotate_2a_optimization.py --optimizer adamw --lr 0.001
+python train_rotate_2a_optimization.py --optimizer adamw --lr 0.0005
+
+# 2A(b): Evaluate the validation-selected checkpoint on the test set
+python evaluate_rotate_2a.py
+```
+
+Question 2A checkpoints are saved in separate `outputs/rotate_*_50epochs/` directories. The final test evaluation is written to `report/results/q2a_selected_rotate_test_mrr.csv`, leaving the Question 1 test results unchanged.
 
 ### Question 3
 
